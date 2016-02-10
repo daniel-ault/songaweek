@@ -1,0 +1,27 @@
+CREATE DATABASE IF NOT EXISTS saw;
+USE saw;
+
+CREATE TABLE IF NOT EXISTS artists
+(
+id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+name VARCHAR(255),
+youtube VARCHAR(255),
+soundcloud VARCHAR(255),
+PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS songs
+(
+id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+artist_id SMALLINT UNSIGNED,
+url VARCHAR(255),
+title VARCHAR(255),
+week SMALLINT UNSIGNED,
+PRIMARY KEY (id),
+FOREIGN KEY (artist_id) REFERENCES artists(id)
+);
+
+GRANT ALL PRIVILEGES ON artists TO 'python'@'localhost';
+GRANT ALL PRIVILEGES ON songs TO 'python'@'localhost';
+GRANT SELECT ON artists TO 'php'@'localhost';
+GRANT SELECT ON songs TO 'php'@'localhost';

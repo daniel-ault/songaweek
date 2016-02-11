@@ -37,6 +37,12 @@ FOREIGN KEY (artist_id) REFERENCES artists(id),
 FOREIGN KEY (site_id) REFERENCES supported_sites(id)
 );
 
+INSERT INTO supported_sites(name) 
+VALUES
+("Youtube"),
+("Soundcloud");
+
+
 GRANT ALL PRIVILEGES ON artists TO 'python'@'localhost';
 GRANT ALL PRIVILEGES ON songs TO 'python'@'localhost';
 GRANT ALL PRIVILEGES ON supported_sites TO 'python'@'localhost';

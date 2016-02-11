@@ -48,21 +48,47 @@ def add_artists(filename):
 				cursor.execute(query)
 			else:
 				print artist + " already exists"
+			
+
+			conn.commit()
+			query = "SELECT id FROM artists WHERE name = '" + artist + "';"
+			cursor.execute(query)
+			artist_id = cursor.fetchall()[0][0]
 
 			if "youtu" in row[1]:
 				link = get_artist_link_youtube(row[1])
-				query = "UPDATE artists SET youtube='" + link + "' WHERE name='" + artist + "'"
+				query = "INSERT INTO accounts(url, artist_id, site_id) VALUES('" + link + "', '" + str(artist_id) + "', 1);"
 				print query
 				cursor.execute(query)
 			elif "soundcloud" in row[1]:
 				link = get_artist_link_soundcloud(row[1])		
-				query = "UPDATE artists SET soundcloud='" + link + "' WHERE name='" + artist + "'"
+				query = "INSERT INTO accounts(url, artist_id, site_id) VALUES('" + link + "', '" + str(artist_id) + "', 2);"
 				print query
 				cursor.execute(query)
 	
 			#print cursor.fetchall()[0][0]	
 	conn.commit()
 	conn.close()
+
+
+def clear_database():
+	config = {
+		'user': 'python',
+		'password': '',
+		'host': 'localhost',
+		'database': 'saw'
+	}
+	
+	conn = mysql.connector.connect(**config)
+	cursor = conn.cursor()
+	
+	query = "DELETE FROM songs;"
+	cursor.execute(query)
+	query = "TRUNCATE TABLE songs;"
+	cursor.execute(query)
+
+	conn.close()
+
 
 
 def get_artist_link_youtube(url):

@@ -5,8 +5,6 @@ CREATE TABLE IF NOT EXISTS artists
 (
 id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
 name VARCHAR(255),
-youtube VARCHAR(255),
-soundcloud VARCHAR(255),
 PRIMARY KEY (id)
 );
 
@@ -21,7 +19,29 @@ PRIMARY KEY (id),
 FOREIGN KEY (artist_id) REFERENCES artists(id)
 );
 
+CREATE TABLE IF NOT EXISTS supported_sites
+(
+id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+name VARCHAR(255),
+PRIMARY_KEY(id)
+);
+
+CREATE TABLE IF NOT EXISTS accounts
+(
+id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+artist_id SMALLINT UNSIGNED,
+site_id SMALLINT UNSIGNED,
+url VARCHAR(255),
+PRIMARY_KEY(id),
+FOREIGN_KEY(artist_id) REFERENCES artists(id),
+FOREIGN_KEY(site_id) REFERENCES supported_sites(id)
+);
+
 GRANT ALL PRIVILEGES ON artists TO 'python'@'localhost';
 GRANT ALL PRIVILEGES ON songs TO 'python'@'localhost';
+GRANT ALL PRIVILEGES ON supported_sites TO 'python'@'localhost';
+GRANT ALL PRIVILEGES ON accounts TO 'python'@'localhost';
 GRANT SELECT ON artists TO 'php'@'localhost';
 GRANT SELECT ON songs TO 'php'@'localhost';
+GRANT SELECT ON supported_sites TO 'php'@'localhost';
+GRANT SELECT ON accounts TO 'php'@'localhost';

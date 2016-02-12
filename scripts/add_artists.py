@@ -70,7 +70,13 @@ def add_artists(filename):
 						link = get_artist_link_soundcloud(row[1])
 					
 					if not (link.endswith(".com") or link.endswith(".com/")):
-						query = "SELECT COUNT(*) FROM accounts WHERE artist_id=" + str(artist_id) + " AND site_id=" + str(site_id) + ";"
+						query = ("SELECT COUNT(*) "
+									"FROM accounts "
+									"WHERE artist_id=" + str(artist_id) + 
+									" AND site_id=" + str(site_id) + 
+									" AND url='" + link + "';"
+									)
+						print query
 						cursor.execute(query)
 						exists = cursor.fetchall()[0][0]
 						print exists

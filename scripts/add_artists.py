@@ -39,6 +39,7 @@ def add_artists(filename):
 		for row in week1:
 			artist = row[0]
 			query = "SELECT COUNT(*) FROM artists WHERE name = '" + artist + "';"
+			print query
 			cursor.execute(query)
 			exists = cursor.fetchall()[0][0]
 			if exists == 0:
@@ -53,19 +54,31 @@ def add_artists(filename):
 			conn.commit()
 			query = "SELECT id FROM artists WHERE name = '" + artist + "';"
 			cursor.execute(query)
+			#print cursor.fetchall()[0][0]
 			artist_id = cursor.fetchall()[0][0]
+			print artist_id
 
-			if "youtu" in row[1]:
-				link = get_artist_link_youtube(row[1])
-				query = "INSERT INTO accounts(url, artist_id, site_id) VALUES('" + link + "', '" + str(artist_id) + "', 1);"
-				print query
-				cursor.execute(query)
-			elif "soundcloud" in row[1]:
-				link = get_artist_link_soundcloud(row[1])		
-				query = "INSERT INTO accounts(url, artist_id, site_id) VALUES('" + link + "', '" + str(artist_id) + "', 2);"
-				print query
-				cursor.execute(query)
-	
+			sites = {'youtu': 1, 'soundcloud': 2}
+
+			for url_part in sites.iterkeys():
+				if url_part in row[1]:
+					site_id = sites[url_part]
+					link = '';
+					if site_id == 1:
+						link = get_artist_link_youtube(row[1])
+					elif site_id == 2:
+						link = get_artist_link_soundcloud(row[1])
+					
+					if not (link.endswith(".com") or link.endswith(".com/")):
+						query = "SELECT COUNT(*) FROM accounts WHERE artist_id=" + str(artist_id) + " AND site_id=" + str(site_id) + ";"
+						cursor.execute(query)
+						exists = cursor.fetchall()[0][0]
+						print exists
+						if exists == 0:
+							query = "INSERT INTO accounts(url, artist_id, site_id) VALUES('" + link + "', " + str(artist_id) + ", " + str(site_id) + ");"
+							cursor.execute(query)
+							print query
+			conn.commit()	
 			#print cursor.fetchall()[0][0]	
 	conn.commit()
 	conn.close()

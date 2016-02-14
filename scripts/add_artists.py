@@ -3,6 +3,7 @@ import csv
 import mysql.connector
 import requests
 import glob, os
+import re
 
 def main():
 	#if len(sys.argv) == 1 or len(sys.argv) > 3:
@@ -111,6 +112,10 @@ def clear_database():
 
 
 def get_artist_link_youtube(url):
+	if "www" not in url and "youtu.be" not in url:
+		match = re.match( r'(https*://)?(.*)', url)
+		url = "https://www." + match.group(2)
+			
 	if "http" not in url:
 		url = "https://" + url
 

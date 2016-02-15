@@ -7,7 +7,8 @@
 	</div>
 	
 	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		<ul class="nav navbar-nav">	
+		<ul class="nav navbar-nav">
+			
 			<?php   
 				if ($_GET["page"] == "artists")
 					echo '<li class="active">';
@@ -16,6 +17,7 @@
 			?>	
 				<a href="/artists/">Artists</a>
 			</li>
+			
 			<?php   
 				if ($_GET["page"] == "songs")
 					echo '<li class="active">';
@@ -23,6 +25,15 @@
 					echo '<li>';
 			?>
 				<a href="/songs/week">Submissions</a>
+			</li>
+
+			<?php   
+				if ($_GET["page"] == "shuffle")
+					echo '<li class="active">';
+				else
+					echo '<li>';
+			?>
+				<a href="/shuffle">Shuffle</a>
 			</li>
 			<!--
 			<li class="dropdown">

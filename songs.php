@@ -12,16 +12,16 @@ Sort by: <br>
 $conn = connect_database();
 $sort = "";
 if ($_GET["sort"] == "title") 
-	$sort = "ORDER BY title";
+	$sort = "ORDER BY title ";
 else if ($_GET["sort"] == "artist") 
-	$sort = "ORDER BY artist_id";
+	$sort = "ORDER BY name";
 else if ($_GET["sort"] == "week") 
 	$sort = "ORDER BY week, title";
 	
-$query = "SELECT title, week, url, name FROM songs INNER JOIN artists ON songs.artist_id = artists.id $sort;";
+$query = "SELECT title, week, url, name, artist_id FROM songs INNER JOIN artists ON songs.artist_id = artists.id $sort;";
 $result = $conn->query($query);
 
-$song_head = "Song";
+$song_head = "Submission";
 $artist_head = "Artist";
 $week_head = "Week";
 
@@ -53,12 +53,13 @@ while ($row = $result->fetch_assoc()) {
 	if (strlen($title) == 0)	$title = $row["url"];
 	$week = $row["week"];
 	$artist = $row["name"];
+	$artist_id = $row["artist_id"];
 	$url = $row["url"];
 
 	echo <<<EOT
 		<tr>
 			<td><a href="$url">$title</a></td>
-			<td>$artist</td>
+			<td><a href="/profile/$artist_id">$artist</a></td>
 			<td>$week</td>
 		<tr>
 EOT;

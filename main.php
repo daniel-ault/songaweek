@@ -7,7 +7,7 @@ LOOK IT WORKED
 
 echo create_link("Artists", "/artists/");
 echo "<br>\r\n";
-echo create_link("Songs", "/songs/");
+echo create_link("Submissions", "/songs/");
 echo "<br>\r\n";
 
 ?>

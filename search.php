@@ -33,7 +33,7 @@ echo "</ul>\r\n";
 
 #search songs
 
-echo "<h2>Songs</h2>\r\n";
+echo "<h2>Submissions</h2>\r\n";
 
 $query = "SELECT * FROM songs WHERE title LIKE \"%{$_POST["search"]}%\";";
 $result = $conn->query($query);

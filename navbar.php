@@ -22,7 +22,7 @@
 				else
 					echo '<li>';
 			?>
-				<a href="/songs/week">Songs</a>
+				<a href="/songs/week">Submissions</a>
 			</li>
 			<!--
 			<li class="dropdown">

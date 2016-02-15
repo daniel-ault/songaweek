@@ -34,7 +34,7 @@ echo "</p>\r\n";
 $query = "SELECT * FROM songs WHERE artist_id={$_GET["id"]};";
 $result = $conn->query($query);
 
-echo "<h3>Songs</h3>";
+echo "<h3>Submissions</h3>";
 
 echo '<p>';
 while ($row = $result->fetch_assoc()) {

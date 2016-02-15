@@ -49,7 +49,15 @@ def add_songs(filename):
 			query = "SELECT id FROM artists WHERE name='" + artist + "';";
 			cursor.execute(query)
 			artist_id = cursor.fetchall()[0][0]
-			query = "INSERT INTO songs (artist_id, url, title, week) VALUES (" + str(artist_id) + ", '" + song + "', '" + str(title) + "', " + str(week_num) + ");"
+			site_id = get_site_id(song)
+			query = ("INSERT INTO songs " 
+						"(artist_id, url, title, week, site_id) "
+						"VALUES (" + str(artist_id) + 
+						", '" + song + 
+						"', '" + str(title) + 
+						"', " + str(week_num) + 
+						", " + str(site_id) + ");"
+						)
 			print query
 			cursor.execute(query)
 
@@ -75,6 +83,39 @@ def clear_database():
 	cursor.execute(query)
 
 	conn.close()
+
+def get_site_id(url):
+	config = {
+		'user': 'python',
+		'password': '',
+		'host': 'localhost',
+		'database': 'saw'
+	}
+
+	conn = mysql.connector.connect(**config)
+	cursor = conn.cursor()
+	
+	site = ""
+
+	if "youtu" in url:
+		site = "Youtube"
+	elif "soundcloud" in url:
+		site = "Soundcloud"
+	elif "tumblr" in url or "tmblr" in url:
+		site = "Tumblr"
+	else:
+		site = "Unsupported"
+
+	query = "SELECT id FROM supported_sites WHERE name='" + site + "';"
+	cursor.execute(query)
+	
+	site_id = cursor.fetchall()[0][0]
+
+	conn.close()
+
+	return site_id
+
+
 
 def get_song_title(url):
 	if "youtu" in url:

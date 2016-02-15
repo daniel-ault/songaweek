@@ -81,8 +81,12 @@ def get_song_title(url):
 		return get_song_name_youtube(url)
 	elif "soundcloud" in url:
 		return get_song_name_soundcloud(url)
-	elif "tumblr" in url:
+	elif "tumblr" in url and "post" in url:
 		return get_title_tumblr(url)
+	elif "tmblr" in url:
+		return get_title_tumblr(url)
+	elif "tumblr" in url:
+		return get_tumblr_post(url)
 	else:
 		return ""
 
@@ -123,8 +127,6 @@ def get_song_name_soundcloud(url):
 def get_title_tumblr(url):
 	if "http" not in url:
 		url = "https://" + url
-	
-	url = get_tumblr_post(url)
 
 	r = requests.get(url, stream=True)
 	
@@ -144,7 +146,7 @@ def get_tumblr_post(url):
 		if url_post in line:
 			for n in line.split('"'):
 				if url_post in n:
-					return n
+					return get_title_tumblr(n)
 
 
 main()

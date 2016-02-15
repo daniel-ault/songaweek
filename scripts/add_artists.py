@@ -57,7 +57,6 @@ def add_artists(filename):
 			cursor.execute(query)
 			#print cursor.fetchall()[0][0]
 			artist_id = cursor.fetchall()[0][0]
-			print artist_id
 
 			sites = {'youtu': 1, 'soundcloud': 2}
 
@@ -80,7 +79,6 @@ def add_artists(filename):
 						print query
 						cursor.execute(query)
 						exists = cursor.fetchall()[0][0]
-						print exists
 						if exists == 0:
 							query = "INSERT INTO accounts(url, artist_id, site_id) VALUES('" + link + "', " + str(artist_id) + ", " + str(site_id) + ");"
 							cursor.execute(query)

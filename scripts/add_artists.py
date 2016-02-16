@@ -58,7 +58,11 @@ def add_artists(filename):
 			#print cursor.fetchall()[0][0]
 			artist_id = cursor.fetchall()[0][0]
 
-			sites = {'youtu': 1, 'soundcloud': 2, 'mblr': 3, 'bandcamp': 4}
+			sites = {'youtu': 1, 
+						'soundcloud': 2, 
+						'mblr': 3, 
+						'bandcamp': 4,
+						'reverbnation': 5}
 
 			for url_part in sites.iterkeys():
 				if url_part in row[1]:
@@ -73,6 +77,8 @@ def add_artists(filename):
 						#link = get_artist_link_tumblr(row[1])
 					elif site_id == 4:
 						link = get_artist_link_bandcamp(row[1])
+					elif site_id == 5:
+						link = get_artist_link_reverbnation(row[1])
 					
 					# If the link ends in .com or .com/, then that means that there is no profile
 					# link, the page is set to private or something.
@@ -184,5 +190,10 @@ def get_artist_link_bandcamp(url):
 	match = re.match(r'(https?://)?([a-z]*.bandcamp.com)(.*)', url)
 	new_url = "https://" + match.group(2)
 	return new_url
+
+
+def get_artist_link_reverbnation(url):
+	return get_artist_link_soundcloud(url)
+
 
 main()

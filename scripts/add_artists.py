@@ -170,6 +170,10 @@ def get_artist_link_youtube(url):
 
 
 def get_artist_link_soundcloud(url):
+	if "www" not in url:
+		match = re.match( r'(https*://)?(.*)', url)
+		url = "https://www." + match.group(2)
+	
 	if "http" not in url:
 		url = "https://" + url
 

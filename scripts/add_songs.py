@@ -106,6 +106,8 @@ def get_site_id(url):
 		site = "Tumblr"
 	elif "bandcamp" in url:
 		site = "Bandcamp"
+	elif "reverbnation" in url:
+		site = "Reverbnation"
 	else:
 		site = "Unsupported"
 

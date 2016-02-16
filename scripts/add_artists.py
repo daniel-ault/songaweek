@@ -4,6 +4,7 @@ import mysql.connector
 import requests
 import glob, os
 import re
+import urllib2
 
 def main():
 	#if len(sys.argv) == 1 or len(sys.argv) > 3:
@@ -73,8 +74,7 @@ def add_artists(filename):
 					elif site_id == 2:
 						link = get_artist_link_soundcloud(row[1])
 					elif site_id == 3:
-						link = ""
-						#link = get_artist_link_tumblr(row[1])
+						link = get_artist_link_tumblr(row[1])
 					elif site_id == 4:
 						link = get_artist_link_bandcamp(row[1])
 					elif site_id == 5:
@@ -85,7 +85,7 @@ def add_artists(filename):
 					# Except if it's bandcamp, the format there is
 					# user.bandcamp.com
 					# Also, ^ is logical XOR in python
-					if ("bandcamp" in link) ^ (not (link.endswith(".com") or link.endswith(".com/"))):
+					if ("bandcamp" in link or "tumblr" in link) ^ (not (link.endswith(".com") or link.endswith(".com/"))):
 						query = ("SELECT COUNT(*) "
 									"FROM accounts "
 									"WHERE artist_id=" + str(artist_id) + 
@@ -187,11 +187,19 @@ def get_artist_link_soundcloud(url):
 
 
 def get_artist_link_tumblr(url):
-	return "";
+	if "tmblr" in url:
+		response = urllib2.urlopen(url)
+		url = response.url
+
+
+
+	match = re.match(r'(https?://)?([a-z1-9]*.tumblr.com)(.*)', url)
+	new_url = "https://" + match.group(2)
+	return new_url
 
 
 def get_artist_link_bandcamp(url):
-	match = re.match(r'(https?://)?([a-z]*.bandcamp.com)(.*)', url)
+	match = re.match(r'(https?://)?([a-z1-9]*.bandcamp.com)(.*)', url)
 	new_url = "https://" + match.group(2)
 	return new_url
 

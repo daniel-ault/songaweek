@@ -47,6 +47,7 @@ VALUES
 ("Soundcloud"),
 ("Tumblr"),
 ("Bandcamp"),
+("Reverbnation"),
 ("Unsupported");
 
 

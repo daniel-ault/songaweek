@@ -133,6 +133,8 @@ def get_song_title(url):
 		return get_tumblr_post(url)
 	elif "bandcamp" in url:
 		return get_song_name_bandcamp(url)
+	elif "reverbnation" in url:
+		return get_song_name_reverbnation(url)
 	else:
 		return ""
 
@@ -205,5 +207,15 @@ def get_song_name_bandcamp(url):
 		if '<div class="trackTitle">' in line:
 			return re.split('<|>', line)[4]
 			
+
+def get_song_name_reverbnation(url):
+	if "http" not in url:
+		url = "https://" + url
+
+	r = requests.get(url, stream=True)
+
+	for line in r.iter_lines():
+		if '<span class="song_name">' in line:
+			return re.split('<|>', line)[2]
 
 main()

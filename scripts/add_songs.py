@@ -3,6 +3,7 @@ import csv
 import mysql.connector
 import requests
 import glob, os
+import re
 
 def main():
 	#if len(sys.argv) == 1 or len(sys.argv) > 3:
@@ -103,6 +104,8 @@ def get_site_id(url):
 		site = "Soundcloud"
 	elif "tumblr" in url or "tmblr" in url:
 		site = "Tumblr"
+	elif "bandcamp" in url:
+		site = "Bandcamp"
 	else:
 		site = "Unsupported"
 
@@ -128,6 +131,8 @@ def get_song_title(url):
 		return get_title_tumblr(url)
 	elif "tumblr" in url:
 		return get_tumblr_post(url)
+	elif "bandcamp" in url:
+		return get_song_name_bandcamp(url)
 	else:
 		return ""
 
@@ -189,5 +194,16 @@ def get_tumblr_post(url):
 				if url_post in n:
 					return get_title_tumblr(n)
 
+
+def get_song_name_bandcamp(url):
+	if "http" not in url:
+		url = "https://" + url
+
+	r = requests.get(url, stream=True)
+
+	for line in r.iter_lines():
+		if '<div class="trackTitle">' in line:
+			return re.split('<|>', line)[4]
+			
 
 main()

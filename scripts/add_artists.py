@@ -58,7 +58,7 @@ def add_artists(filename):
 			#print cursor.fetchall()[0][0]
 			artist_id = cursor.fetchall()[0][0]
 
-			sites = {'youtu': 1, 'soundcloud': 2}
+			sites = {'youtu': 1, 'soundcloud': 2, 'mblr': 3, 'bandcamp': 4}
 
 			for url_part in sites.iterkeys():
 				if url_part in row[1]:
@@ -68,8 +68,18 @@ def add_artists(filename):
 						link = get_artist_link_youtube(row[1])
 					elif site_id == 2:
 						link = get_artist_link_soundcloud(row[1])
+					elif site_id == 3:
+						link = ""
+						#link = get_artist_link_tumblr(row[1])
+					elif site_id == 4:
+						link = get_artist_link_bandcamp(row[1])
 					
-					if not (link.endswith(".com") or link.endswith(".com/")):
+					# If the link ends in .com or .com/, then that means that there is no profile
+					# link, the page is set to private or something.
+					# Except if it's bandcamp, the format there is
+					# user.bandcamp.com
+					# Also, ^ is logical XOR in python
+					if ("bandcamp" in link) ^ (not (link.endswith(".com") or link.endswith(".com/"))):
 						query = ("SELECT COUNT(*) "
 									"FROM accounts "
 									"WHERE artist_id=" + str(artist_id) + 
@@ -152,34 +162,6 @@ def get_artist_link_youtube(url):
 	else:
 		return artist2
 
-	'''
-	if "http" not in url:
-		url = "https://" + url
-	print url
-	r = requests.get(url, stream=True)
-	artist = "" 
-
-	for line in r.iter_lines():
-		if '<a href="/channel' in line:
-			s = line
-			s = s.split()
-			for string in s:
-				if '/channel' in string:
-					if artist == "":
-						artist = string[6:-1]
-
-	artist = "https://youtube.com" + artist
-	r = requests.get(artist, stream=True)
-	
-	for line in r.iter_lines():
-		if 'youtube.com/user' in line:
-			s = line.split('"')
-			for string in s:
-				if 'youtube.com/user' in string:
-					artist = string
-
-	return artist
-	'''
 
 def get_artist_link_soundcloud(url):
 	if "http" not in url:
@@ -194,5 +176,13 @@ def get_artist_link_soundcloud(url):
 	return artist
 
 
+def get_artist_link_tumblr(url):
+	return "";
+
+
+def get_artist_link_bandcamp(url):
+	match = re.match(r'(https?://)?([a-z]*.bandcamp.com)(.*)', url)
+	new_url = "https://" + match.group(2)
+	return new_url
 
 main()

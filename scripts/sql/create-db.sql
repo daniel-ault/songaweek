@@ -46,6 +46,7 @@ VALUES
 ("Youtube"),
 ("Soundcloud"),
 ("Tumblr"),
+("Bandcamp"),
 ("Unsupported");
 
 

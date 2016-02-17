@@ -24,7 +24,7 @@ if (isset($_GET["filter"]) and $_GET["sort"] == "week")
 if (isset($_GET["filter"]) and $_GET["sort"] == "site")
 	$button_site_title = $_GET["filter"];
 
-$btn_type = "btn-default";
+$btn_type = "btn-info";
 #$btn_type = "btn-primary";
 
 echo "<div class=\"btn-group\">\r\n";
@@ -102,7 +102,7 @@ echo $conn->error;
 
 while ($row = $result->fetch_assoc()) {
 	$title = $row["title"];
-	if (strlen($title) == 0)	$title = $row["url"];
+	if (strlen($title) == 0)	$title = "Error: title not found";
 	$week = $row["week"];
 	$artist = $row["artist_name"];
 	$artist_id = $row["artist_id"];

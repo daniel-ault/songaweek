@@ -90,7 +90,7 @@ function create_site_drop_list($title, $btn_type) {
 		$url = "/songs/site/" . strtolower(trim($row["name"]));
 		$items[] = array("text"=>$row["name"], "url"=>$url);
 	}
-
+	
 	create_drop_list($title, $items, $btn_type);
 	
 	$conn->close();

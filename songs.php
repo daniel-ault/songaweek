@@ -15,17 +15,21 @@ $query = "SELECT MAX(week) AS max_week FROM songs;";
 $result = $conn->query($query);
 
 $max_week = $result->fetch_assoc()["max_week"];
-$button_title = "Filter by week";
+$button_week_title = "Filter by week";
+$button_site_title = "Filter by site";
 
-if (isset($_GET["week"]))
-	$button_title = "Week {$_GET["week"]}";
+
+if (isset($_GET["filter"]) and $_GET["sort"] == "week")
+	$button_week_title = "Week {$_GET["filter"]}";
+if (isset($_GET["filter"]) and $_GET["sort"] == "site")
+	$button_site_title = $_GET["filter"];
 
 $btn_type = "btn-default";
 #$btn_type = "btn-primary";
 
 echo "<div class=\"btn-group\">\r\n";
-create_week_drop_list($button_title, $max_week, $btn_type);
-create_site_drop_list("Filter by site", $btn_type);
+create_week_drop_list($button_week_title, $max_week, $btn_type);
+create_site_drop_list($button_site_title, $btn_type);
 echo "</div>\r\n";
 
 

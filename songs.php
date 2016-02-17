@@ -9,6 +9,25 @@ Sort by: <br>
 
 <?php
 
+$conn = connect_database();
+
+$query = "SELECT MAX(week) AS max_week FROM songs;";
+$result = $conn->query($query);
+
+$max_week = $result->fetch_assoc()["max_week"];
+$button_title = "Filter by week";
+
+if (isset($_GET["week"]))
+	$button_title = "Week {$_GET["week"]}";
+
+$btn_type = "btn-default";
+#$btn_type = "btn-primary";
+
+echo "<div class=\"btn-group\">\r\n";
+create_week_drop_list($button_title, $max_week, $btn_type);
+create_site_drop_list("Filter by site", $btn_type);
+echo "</div>\r\n";
+
 
 $song_head = "Submission";
 $artist_head = "Artist";
@@ -40,18 +59,28 @@ echo <<<EOT
 	<tbody>
 EOT;
 
-
-$conn = connect_database();
+$site_id;
+if (isset($_GET["filter"]) and $_GET["sort"] == "site") {
+	$query = "SELECT id FROM supported_sites WHERE name='{$_GET["filter"]}';";
+	$result = $conn->query($query);
+	$site_id = $result->fetch_assoc()["id"];
+}
 
 $sort = "";
 if ($_GET["sort"] == "title") 
 	$sort = "ORDER BY title ";
 else if ($_GET["sort"] == "artist") 
 	$sort = "ORDER BY artist_name";
-else if ($_GET["sort"] == "week") 
+else if ($_GET["sort"] == "week") { 
 	$sort = "ORDER BY week, title";
-else if ($_GET["sort"] == "site")
+	if (isset($_GET["filter"]))
+		$sort = "WHERE week={$_GET["filter"]} " . $sort;
+}
+else if ($_GET["sort"] == "site") {
 	$sort = "ORDER BY site_name, title";
+	if (isset($_GET["filter"]))
+		$sort = "WHERE site_id=$site_id " . $sort;
+}
 
 $query = <<<EOT
 SELECT title, week, url, artist_id, artists.name AS artist_name, supported_sites.name AS site_name

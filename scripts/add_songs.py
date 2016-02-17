@@ -108,6 +108,8 @@ def get_site_id(url):
 		site = "Bandcamp"
 	elif "reverbnation" in url:
 		site = "Reverbnation"
+	elif "drive.google" in url or "goo.gl" in url:
+		site = "Google Drive"
 	else:
 		site = "Unsupported"
 
@@ -137,6 +139,8 @@ def get_song_title(url):
 		return get_song_name_bandcamp(url)
 	elif "reverbnation" in url:
 		return get_song_name_reverbnation(url)
+	elif "drive.google" in url or "goo.gl" in url:
+		return get_song_name_googledrive(url)
 	else:
 		return ""
 
@@ -219,5 +223,15 @@ def get_song_name_reverbnation(url):
 	for line in r.iter_lines():
 		if '<span class="song_name">' in line:
 			return re.split('<|>', line)[2]
+
+
+def get_song_name_googledrive(url):
+	r = requests.get(url, stream=True)
+
+	for line in r.iter_lines():
+		if '<title>' in line:
+			match = re.search(r'(<title>)(((?! - Google Drive).)*)', line)
+			return match.group(2)
+
 
 main()

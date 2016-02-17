@@ -48,6 +48,7 @@ VALUES
 ("Tumblr"),
 ("Bandcamp"),
 ("Reverbnation"),
+("Google Drive"),
 ("Unsupported");
 
 

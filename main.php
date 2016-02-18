@@ -7,9 +7,6 @@ echo "<br>\r\n";
 echo create_link("Submissions", "/songs/");
 echo "<br>\r\n";
 
-for ($i=0; $i<1000; $i++) {
-	echo 'test<br>';
-}
 
 ?>
 

@@ -57,7 +57,7 @@ echo <<<EOT
 			<th><a href="/songs/title">$song_head</a></th>
 			<th><a href="/songs/artist">$artist_head</a></th>
 			<th><a href="/songs/week">$week_head</a></th>
-			<th><a href="/songs/site">$site_head</a></th>
+		<!---	<th><a href="/songs/site">$site_head</a></th>-->
 		</tr>
 	</thead>
 	<tbody>
@@ -114,7 +114,7 @@ while ($row = $result->fetch_assoc()) {
 			<td><a href="$url">$title</a></td>
 			<td><a href="/profile/$artist_id">$artist</a></td>
 			<td>$week</td>
-			<td>$site</td>
+		<!---	<td>$site</td>-->
 		<tr>
 EOT;
 	#echo "<b>" . create_link($title, $row["url"]). "</b>";

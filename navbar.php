@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<div class="navbar-header">
 		 
 		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -60,7 +60,7 @@
 					</li>
 				</ul>
 			</li>
-			-->
+			
 		</ul>
 		<form class="navbar-form navbar-left" action="/search" method="post">
 			<div class="form-group">
@@ -94,6 +94,7 @@
 				</ul>
 			</li>
 		</ul>
+		-->
 	</div>
 	
 </nav>

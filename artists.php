@@ -10,14 +10,13 @@ echo <<<EOT
 		<th>Artists</th>
 	</thead>
 	<tbody>
+
 EOT;
 
 
 while ($row = $result->fetch_assoc()) {
-	echo "		<tr>\r\n";
-	echo "			<td>" . create_link($row["name"], "/profile/{$row["id"]}");
-	echo "</td>\r\n";
-	echo "		</tr>\r\n";
+	echo "			<tr><td>" . create_link($row["name"], "/profile/{$row["id"]}");
+	echo "</td></tr>\r\n";
 }
 
 echo <<<EOT

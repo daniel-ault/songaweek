@@ -14,9 +14,16 @@ EOT;
 
 $result = $conn->query($query)->fetch_assoc();
 
+
+echo "<h2>Artist</h2>\r\n";
+echo "<p>\r\n";
 echo create_link($result["name"], "/profile/{$result["artist_id"]}");
-echo "<br>\r\n";
+echo "\r\n</p>\r\n";
+
+echo "<h2>Submission</h2>\r\n";
+echo "<p>\r\n";
 echo create_link($result["title"], $result["url"]);
+echo "\r\n</p>\r\n";
 
 '
 foreach($result->fetch_assoc() as $item) {

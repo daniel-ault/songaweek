@@ -2,7 +2,9 @@ DirectoryIndex index.php
 
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([a-zA-Z0-9]+)$ index.php?page=$1
 RewriteRule ^(.*)/$ /$1 [L,R=301]
+
 
 RewriteRule ^profile/([0-9]+)/?$ index.php?page=profile&id=$1
 RewriteRule ^songs/([a-zA-Z0-9]+)/?$ index.php?page=songs&sort=$1
@@ -23,4 +25,3 @@ RewriteRule ^$ index.php?page=main
 #RewriteRule ^/songs/ index.php?page=songs
 
 #RewriteRule ^([a-zA-Z0-9]+)$/ index.php?page=$1
-RewriteRule ^([a-zA-Z0-9]+)$ index.php?page=$1

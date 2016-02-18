@@ -1,12 +1,3 @@
-
-<!--
-Sort by: <br>
-<a class="btn btn-primary btn-large" href="title">Title</a>
-<a class="btn btn-primary btn-large" href="artist">Artist</a>
-<a class="btn btn-primary btn-large" href="week">Week</a>
-<br>
--->
-
 <?php
 
 $conn = connect_database();

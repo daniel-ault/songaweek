@@ -6,10 +6,11 @@
 
 <body>
 
+<?php include 'navbar.php'?>
 <div class="container-fluid">
+	<br>
 	<div class="row">
 		<div class="col-md-12">
-			<?php include 'navbar.php'?>
 			<div class="jumbotron">
 				<?php
 					if (!empty($_GET["page"])) {

@@ -11,7 +11,7 @@
    <link href="/css/bootstrap.min.css" rel="stylesheet">
 <!--	<link href="http://dragonflycave.com/styles/scyther-style.css" rel="stylesheet">
 -->
-	<link href="css/style.css" rel="stylesheet">
+	<link href="/css/style.css" rel="stylesheet">
 
 	<?php include 'php_utils.php'?>
 

@@ -96,4 +96,67 @@ function create_site_drop_list($title, $btn_type) {
 	$conn->close();
 }
 
+function create_filter_drop_lists() {
+	$conn = connect_database();
+	
+	$query = "SELECT MAX(week) AS max_week FROM songs;";
+	$result = $conn->query($query);
+	
+	$max_week = $result->fetch_assoc()["max_week"];
+	$button_week_title = "Filter by week";
+	$button_site_title = "Filter by site";
+	
+	
+	if (isset($_GET["filter"]) and $_GET["sort"] == "week")
+		$button_week_title = "Week {$_GET["filter"]}";
+	if (isset($_GET["filter"]) and $_GET["sort"] == "site")
+		$button_site_title = $_GET["filter"];
+
+	$btn_type = "btn-primary dropdown-menu-right";
+	#$btn_type = "btn-primary";
+
+	echo "<div class=\"btn-group pull-right\">\r\n";
+	create_week_drop_list($button_week_title, $max_week, $btn_type);
+	create_site_drop_list($button_site_title, $btn_type);
+	echo "</div>\r\n";
+
+	$conn->close();
+}
+
+
+function create_table($head, $rows) {
+	echo <<<EOT
+	<table class="table">
+		<thead>
+			<tr>
+
+EOT;
+	
+	foreach($head as $item) {
+		echo <<<EOT
+				<th>$item</th>
+EOT;
+	}
+
+	echo <<<EOT
+			</tr>
+		</thead>
+		<tbody>
+
+EOT;
+
+	foreach($rows as $row) {
+		echo "			<tr>";
+		foreach($row as $item) {
+			echo "				<td>$item</td>";
+		}
+		echo "			</tr>";
+	}
+
+	echo <<<EOT
+		</tbody>
+	</table>
+EOT;
+}
+
 ?>

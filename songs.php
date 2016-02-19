@@ -2,34 +2,16 @@
 
 $conn = connect_database();
 
-$query = "SELECT MAX(week) AS max_week FROM songs;";
-$result = $conn->query($query);
-
-$max_week = $result->fetch_assoc()["max_week"];
-$button_week_title = "Filter by week";
-$button_site_title = "Filter by site";
-
-
-if (isset($_GET["filter"]) and $_GET["sort"] == "week")
-	$button_week_title = "Week {$_GET["filter"]}";
-if (isset($_GET["filter"]) and $_GET["sort"] == "site")
-	$button_site_title = $_GET["filter"];
-
-$btn_type = "btn-info";
-#$btn_type = "btn-primary";
-
-echo "<div class=\"btn-group\">\r\n";
-create_week_drop_list($button_week_title, $max_week, $btn_type);
-create_site_drop_list($button_site_title, $btn_type);
-echo "</div>\r\n";
-
-
 $song_head = "Submission";
 $artist_head = "Artist";
 $week_head = "Week";
 $site_head = "Site";
 
 $down_arrow = "&#x25BE";
+
+if (!isset($_GET["sort"])) {
+	$_GET["sort"] = "none";
+}
 
 if ($_GET["sort"] == "title")
 	$song_head = $song_head . $down_arrow;
@@ -102,11 +84,11 @@ while ($row = $result->fetch_assoc()) {
 
 	echo <<<EOT
 		<tr>
-			<td><a href="$url">$title</a></td>
+			<td class="submission"><a href="$url">$title</a></td>
 			<td><a href="/profile/$artist_id">$artist</a></td>
 			<td>$week</td>
 		<!---	<td>$site</td>-->
-		<tr>
+		</tr>
 EOT;
 	#echo "<b>" . create_link($title, $row["url"]). "</b>";
 	#echo "<br>\r\n";

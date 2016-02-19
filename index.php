@@ -7,8 +7,7 @@
 <body>
 
 <?php include 'navbar.php'?>
-<div class="container-fluid">
-	<br>
+<div class="main wrapper clearfix">
 	<div class="row">
 		<div class="col-md-12">
 			<div class="jumbotron">

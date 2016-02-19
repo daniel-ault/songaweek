@@ -11,11 +11,11 @@
    <link href="/css/bootstrap.min.css" rel="stylesheet">
 <!--	<link href="http://dragonflycave.com/styles/scyther-style.css" rel="stylesheet">
 -->
-	<link href="css/style.css" rel="stylesheet">
+	<link href="/css/style.css" rel="stylesheet">
 
+	<link rel="stylesheet" href="//55b558c7-site.gandi.ws/_css/site_69711_1_11.css">
 	<?php include 'php_utils.php'?>
 	
-	<link rel="stylesheet" href="//55b558c7-site.gandi.ws/_css/site_69711_1_11.css">
 
 
 

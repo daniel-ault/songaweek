@@ -53,3 +53,45 @@ body {
   }
 }
 
+.jumbotron {
+	background-color: #FFFFFF!important;
+}
+
+a {
+	color: rgb(84, 141, 212)!important;
+	word-wrap: break-word!important;
+}
+
+nav.navbar {
+	/*max-height: 50px!important;*/
+}
+
+nav.navbar-default {
+	background-color: #9FE8EF!important;
+
+}
+
+.navbar-default .navbar-nav > .active{
+	color: #000;
+	background: #70D4DD;
+}
+
+.navbar-default .navbar-nav > .active > a, 
+.navbar-default .navbar-nav > .active > a:hover, 
+.navbar-default .navbar-nav > .active > a:focus {
+	color: #000;
+	background: #70D4DD;
+	/*max-height: 48px;*/
+}
+
+div.main {
+	padding:0;
+}
+
+td.submission {
+	width:45%;
+}
+
+button.btn-dropdown {
+
+}

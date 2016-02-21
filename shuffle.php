@@ -14,16 +14,16 @@ EOT;
 
 $result = $conn->query($query)->fetch_assoc();
 
+$head_artist = array("Artist");
+$item_artist[] = array(create_link($result["name"], "/profile/{$result["artist_id"]}"));
 
-echo "<h2>Artist</h2>\r\n";
-echo "<p>\r\n";
-echo create_link($result["name"], "/profile/{$result["artist_id"]}");
-echo "\r\n</p>\r\n";
+create_table($head_artist, $item_artist);
 
-echo "<h2>Submission</h2>\r\n";
-echo "<p>\r\n";
-echo create_link($result["title"], $result["url"]);
-echo "\r\n</p>\r\n";
+
+$head_songs = array("Submissions");
+$item_songs[] = array(create_link($result["title"], $result["url"]));
+
+create_table($head_songs, $item_songs);
 
 '
 foreach($result->fetch_assoc() as $item) {

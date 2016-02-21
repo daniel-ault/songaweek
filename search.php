@@ -9,49 +9,43 @@ $conn = connect_database();
 
 # search artists
 
-echo "<h2>Artists</h2>\r\n";
-
-
 $query = "SELECT * FROM artists WHERE name LIKE \"%{$_POST["search"]}%\";";
 $result = $conn->query($query);
 
-echo "<ul>\r\n";
+$items;
+
 
 if ($result->num_rows > 0) {
 	while ($row = $result->fetch_assoc()) {
-		echo "<li>\r\n";
-		echo create_link($row["name"], "/profile/{$row["id"]}") . "\r\n";
-		echo "</li>\r\n";
+		$items[] =  array(create_link($row["name"], "/profile/{$row["id"]}"));
 	}
 }
 else {
-	echo 'No results found :(';
+	$items[] = array('No results found :(');
 }
 
-echo "</ul>\r\n";
+create_table(array("Artists"), $items);
+
 
 
 #search songs
 
-echo "<h2>Submissions</h2>\r\n";
+unset($items);
 
 $query = "SELECT * FROM songs WHERE title LIKE \"%{$_POST["search"]}%\";";
 $result = $conn->query($query);
 
-echo "<ul>\r\n";
-
 if ($result->num_rows > 0) {
 	while ($row = $result->fetch_assoc()) {	
-		echo "<li>\r\n";
-		echo create_link($row["title"], $row["url"]) . "\r\n";
-		echo "</li>\r\n";
+		$items[] = array( create_link($row["title"], $row["url"]));
 	}
 }
 else {
-	echo 'No results found :(';
+	$items[] = array('No results found :(');
 }
 
-echo "</ul>\r\n";
+create_table(array("Submissions"), $items);
+
 
 $conn->close();
 

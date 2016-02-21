@@ -10,7 +10,8 @@ RewriteRule ^profile/([0-9]+)/?$ index.php?page=profile&id=$1
 RewriteRule ^songs/([a-zA-Z0-9]+)/?$ index.php?page=songs&sort=$1
 RewriteRule ^songs/week/([0-9]+)/?$ index.php?page=songs&sort=week&filter=$1
 RewriteRule ^songs/site/([a-z\s]+)/?$ index.php?page=songs&sort=site&filter=$1
-RewriteRule ^$ index.php?page=main
+#RewriteRule ^$ index.php?page=main
+RewriteRule ^$ index.php?page=songs&sort=week
 
 
 #RewriteRule ^search/([a-zA-Z0-9]+)/?$ index.php?page=search&search=$1

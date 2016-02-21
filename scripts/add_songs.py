@@ -22,6 +22,8 @@ def main():
 
 	for f in files:
 		add_songs(f)
+	
+	add_ringer_song();
 
 	# end main
 
@@ -233,5 +235,22 @@ def get_song_name_googledrive(url):
 			match = re.search(r'(<title>)(((?! - Google Drive).)*)', line)
 			return match.group(2)
 
+
+def add_ringer_song():	
+	config = {
+		'user': 'python',
+		'password': '',
+		'host': 'localhost',
+		'database': 'saw'
+	}
+
+	conn = mysql.connector.connect(**config)
+	cursor = conn.cursor()
+
+	query = "INSERT INTO songs (artist_id, url, title, week, site_id) VALUES (9, 'https://steveringer.bandcamp.com/track/w03-latenight', 'W03_LateNight', 3, 4);"
+
+	cursor.execute(query)
+	conn.commit()
+	conn.close()
 
 main()

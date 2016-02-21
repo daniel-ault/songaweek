@@ -13,7 +13,9 @@
 -->
 	<link href="/css/style.css" rel="stylesheet">
 
-	<link rel="stylesheet" href="//55b558c7-site.gandi.ws/_css/site_69711_1_11.css">
+	<!--<link rel="stylesheet" href="//55b558c7-site.gandi.ws/_css/site_69711_1_11.css">-->
+	<link href="/css/songaweek.css" rel="stylesheet"> 
+
 	<?php include 'php_utils.php'?>
 	
 

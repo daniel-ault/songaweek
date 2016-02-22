@@ -18,8 +18,8 @@
 
 	<?php include 'php_utils.php'?>
 	
-
-
+	<link rel="icon" href="/favicon.ico">
+	
 
     
             <style

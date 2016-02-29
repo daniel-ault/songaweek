@@ -5,11 +5,39 @@ import requests
 import glob, os
 import re
 
+
 def main():
-	#if len(sys.argv) == 1 or len(sys.argv) > 3:
-	#	print "Please give one filename to input in the database."
-	#	sys.exit(0)
+	if len(sys.argv) > 2:
+		print "Please give one week to input in the database, or give no arguments and it will add all weeks."
+		sys.exit(0)
+
+	if len(sys.argv) == 1:
+		add_all()
+	elif len(sys.argv) == 2:
+		match = re.match(r'^[0-9]+$', sys.argv[1])
+		if match == None:
+			print "Please enter in a week number value to enter that week's data into the database,"
+			print "or do not give any arguments to enter every week into the database."
+			sys.exit(0)
+		
+		add_week(sys.argv[1])
+
+
+	# end main
+
+def add_week(week):
+	f = "week" + week + ".csv"
 	
+	os.chdir("./csv")
+
+	if os.path.isfile(f):
+		add_songs(f)
+	else:
+		print "File \"" + f + "\" does not exist."
+
+
+
+def add_all():
 	files = []
 
 	os.chdir("./csv")
@@ -22,10 +50,10 @@ def main():
 
 	for f in files:
 		add_songs(f)
-	
-	add_ringer_song();
 
-	# end main
+	add_ringer_song()
+
+
 
 def add_songs(filename):
 	

@@ -8,7 +8,9 @@ import re
 
 def main():
 	if len(sys.argv) > 2:
-		print "Please give one week to input in the database, or give no arguments and it will add all weeks."
+		print ("Please give one week to input "
+				 "in the database, or give no arguments "
+				 "and it will add all weeks.")
 		sys.exit(0)
 
 	if len(sys.argv) == 1:
@@ -16,8 +18,11 @@ def main():
 	elif len(sys.argv) == 2:
 		match = re.match(r'^[0-9]+$', sys.argv[1])
 		if match == None:
-			print "Please enter in a week number value to enter that week's data into the database,"
-			print "or do not give any arguments to enter every week into the database."
+			print ("Please enter in a week number "
+					 "value to enter that week's data "
+					 "into the database,")
+			print ("or do not give any arguments "
+					 "to enter every week into the database.")
 			sys.exit(0)
 		
 		add_week(sys.argv[1])
@@ -72,6 +77,8 @@ def add_songs(filename):
 	with open(filename, 'rb') as csvfile:
 		week1 = csv.reader(csvfile, delimiter=',')
 		for row in week1:
+			if row[0][0] == "#":
+				continue
 			artist = row[0];
 			song = row[1];
 			if "http" not in song:

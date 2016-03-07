@@ -62,6 +62,9 @@ def add_artists(filename):
 	with open(filename, 'rb') as csvfile:
 		week1 = csv.reader(csvfile, delimiter=',')
 		for row in week1:
+			#comment out lines in the csv files
+			if row[0][0] == "#":
+				continue
 			artist = row[0]
 			query = "SELECT COUNT(*) FROM artists WHERE name = '" + artist + "';"
 			print query

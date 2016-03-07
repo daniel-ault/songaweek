@@ -17,6 +17,7 @@ def main():
 		add_all()
 	elif len(sys.argv) == 2:
 		match = re.match(r'^[0-9]+$', sys.argv[1])
+		
 		if match == None:
 			print ("Please enter in a week number "
 					 "value to enter that week's data "
@@ -81,6 +82,7 @@ def add_songs(filename):
 				continue
 			artist = row[0];
 			song = row[1];
+
 			if "http" not in song:
 				song = "https://" + song
 			title = get_song_title(song)
@@ -88,16 +90,23 @@ def add_songs(filename):
 			cursor.execute(query)
 			artist_id = cursor.fetchall()[0][0]
 			site_id = get_site_id(song)
-			query = ("INSERT INTO songs " 
-						"(artist_id, url, title, week, site_id) "
-						"VALUES (" + str(artist_id) + 
-						", '" + song + 
-						"', '" + str(title) + 
-						"', " + str(week_num) + 
-						", " + str(site_id) + ");"
-						)
-			print query
+			
+			query = "SELECT COUNT(*) FROM songs WHERE title='" + title + "';"
 			cursor.execute(query)
+			exists = cursor.fetchall()[0][0]
+			if exists==0:
+				query = ("INSERT INTO songs " 
+							"(artist_id, url, title, week, site_id) "
+							"VALUES (" + str(artist_id) + 
+							", '" + song + 
+							"', '" + str(title) + 
+							"', " + str(week_num) + 
+							", " + str(site_id) + ");"
+							)
+				print query
+				cursor.execute(query)
+			else:
+				print song + " already exists."
 
 			#print cursor.fetchall()[0][0]	
 	conn.commit()
@@ -165,6 +174,13 @@ def get_song_title(url):
 	if "youtu" in url:
 		return get_song_name_youtube(url)
 	elif "soundcloud" in url:
+		return get_song_name_soundcloud(url)
+	elif "tumblr" in url and "post" in url:
+		return get_title_tumblr(url)
+	elif "tmblr" in url:
+		return get_title_tumblr(url)
+	elif "tumblr" in url:
+		return get_tumblr_post(url)
 		return get_song_name_soundcloud(url)
 	elif "tumblr" in url and "post" in url:
 		return get_title_tumblr(url)
@@ -282,10 +298,5 @@ def add_ringer_song():
 	conn = mysql.connector.connect(**config)
 	cursor = conn.cursor()
 
-	query = "INSERT INTO songs (artist_id, url, title, week, site_id) VALUES (9, 'https://steveringer.bandcamp.com/track/w03-latenight', 'W03_LateNight', 3, 4);"
-
-	cursor.execute(query)
-	conn.commit()
-	conn.close()
 
 main()

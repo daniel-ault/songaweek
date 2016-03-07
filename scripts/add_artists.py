@@ -67,7 +67,6 @@ def add_artists(filename):
 				continue
 			artist = row[0]
 			query = "SELECT COUNT(*) FROM artists WHERE name = '" + artist + "';"
-			print query
 			cursor.execute(query)
 			exists = cursor.fetchall()[0][0]
 			if exists == 0:
